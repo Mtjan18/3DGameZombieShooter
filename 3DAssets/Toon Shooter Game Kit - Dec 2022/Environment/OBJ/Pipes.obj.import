@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bqirkmmvbbqi7"
+path="res://.godot/imported/Pipes.obj-613eb5edaa7d4ee3536231f1f94e8bce.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Pipes.obj-613eb5edaa7d4ee3536231f1f94e8bce.mesh"]
+
+source_file="res://3DAssets/Toon Shooter Game Kit - Dec 2022/Environment/OBJ/Pipes.obj"
+dest_files=["res://.godot/imported/Pipes.obj-613eb5edaa7d4ee3536231f1f94e8bce.mesh", "res://.godot/imported/Pipes.obj-613eb5edaa7d4ee3536231f1f94e8bce.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

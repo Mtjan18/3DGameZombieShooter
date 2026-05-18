@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://jx2fgrrhfg3p"
+path="res://.godot/imported/StreetLight.obj-3699cfced002eb3100cef7d42e850dbb.mesh"
+
+[deps]
+
+files=["res://.godot/imported/StreetLight.obj-3699cfced002eb3100cef7d42e850dbb.mesh"]
+
+source_file="res://3DAssets/Toon Shooter Game Kit - Dec 2022/Environment/OBJ/StreetLight.obj"
+dest_files=["res://.godot/imported/StreetLight.obj-3699cfced002eb3100cef7d42e850dbb.mesh", "res://.godot/imported/StreetLight.obj-3699cfced002eb3100cef7d42e850dbb.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

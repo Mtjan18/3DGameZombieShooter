@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://blcu05hfuu4dq"
+path="res://.godot/imported/Cheeseburger.obj-7eecd7565be96db3acc3d4decf397529.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Cheeseburger.obj-7eecd7565be96db3acc3d4decf397529.mesh"]
+
+source_file="res://3DAssets/Ultimate Food Pack - Oct 2019/OBJ/Cheeseburger.obj"
+dest_files=["res://.godot/imported/Cheeseburger.obj-7eecd7565be96db3acc3d4decf397529.mesh", "res://.godot/imported/Cheeseburger.obj-7eecd7565be96db3acc3d4decf397529.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cxihpnet44hax"
+path="res://.godot/imported/IceCream_3.obj-26ca890e05dd2e2cae7e3c4b0ffb448d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/IceCream_3.obj-26ca890e05dd2e2cae7e3c4b0ffb448d.mesh"]
+
+source_file="res://3DAssets/Ultimate Food Pack - Oct 2019/OBJ/IceCream_3.obj"
+dest_files=["res://.godot/imported/IceCream_3.obj-26ca890e05dd2e2cae7e3c4b0ffb448d.mesh", "res://.godot/imported/IceCream_3.obj-26ca890e05dd2e2cae7e3c4b0ffb448d.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

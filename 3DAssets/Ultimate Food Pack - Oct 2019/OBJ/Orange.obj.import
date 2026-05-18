@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bfdbg00dn30t5"
+path="res://.godot/imported/Orange.obj-2220c983a49c6b98d1376fdb92e562c3.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Orange.obj-2220c983a49c6b98d1376fdb92e562c3.mesh"]
+
+source_file="res://3DAssets/Ultimate Food Pack - Oct 2019/OBJ/Orange.obj"
+dest_files=["res://.godot/imported/Orange.obj-2220c983a49c6b98d1376fdb92e562c3.mesh", "res://.godot/imported/Orange.obj-2220c983a49c6b98d1376fdb92e562c3.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

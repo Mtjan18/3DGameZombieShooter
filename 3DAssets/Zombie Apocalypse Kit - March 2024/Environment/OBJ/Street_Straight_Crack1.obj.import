@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dg04sahvg7ev7"
+path="res://.godot/imported/Street_Straight_Crack1.obj-10787e1c6022113d3686df7a342e1627.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Street_Straight_Crack1.obj-10787e1c6022113d3686df7a342e1627.mesh"]
+
+source_file="res://3DAssets/Zombie Apocalypse Kit - March 2024/Environment/OBJ/Street_Straight_Crack1.obj"
+dest_files=["res://.godot/imported/Street_Straight_Crack1.obj-10787e1c6022113d3686df7a342e1627.mesh", "res://.godot/imported/Street_Straight_Crack1.obj-10787e1c6022113d3686df7a342e1627.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

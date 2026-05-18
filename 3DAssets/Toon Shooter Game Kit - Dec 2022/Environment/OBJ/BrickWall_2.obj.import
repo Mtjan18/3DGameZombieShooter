@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cue41ofhk1swf"
+path="res://.godot/imported/BrickWall_2.obj-174305ae40a3d203f4ef178b73cac553.mesh"
+
+[deps]
+
+files=["res://.godot/imported/BrickWall_2.obj-174305ae40a3d203f4ef178b73cac553.mesh"]
+
+source_file="res://3DAssets/Toon Shooter Game Kit - Dec 2022/Environment/OBJ/BrickWall_2.obj"
+dest_files=["res://.godot/imported/BrickWall_2.obj-174305ae40a3d203f4ef178b73cac553.mesh", "res://.godot/imported/BrickWall_2.obj-174305ae40a3d203f4ef178b73cac553.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
