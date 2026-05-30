@@ -17,6 +17,8 @@ sky = SubResource("Sky_x4u1r")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_cccdv"]
+
 [node name="Node3D" type="Node3D" unique_id=1652462177]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1524191367]
@@ -27,11 +29,20 @@ transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545
 shadow_enabled = true
 
 [node name="Map" parent="." unique_id=923852137 instance=ExtResource("1_knh7k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0031671524, -0.05653858, 0.00244236)
 
-[node name="MainCamera" type="Camera3D" parent="." unique_id=1056685689 node_paths=PackedStringArray("player")]
+[node name="MainCamera" type="Camera3D" parent="." unique_id=1056685689 node_paths=PackedStringArray("player", "map_root")]
 transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 15, 8)
 script = ExtResource("2_ifu8d")
 player = NodePath("../Player_Lis")
+map_root = NodePath("../Map")
 
 [node name="Player_Lis" parent="." unique_id=885777494 instance=ExtResource("3_cccdv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.9852724, 0)
+
+[node name="Lantai" type="StaticBody3D" parent="." unique_id=1423407963]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.008299, 0)
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Lantai" unique_id=1860120626]
+shape = SubResource("WorldBoundaryShape3D_cccdv")
