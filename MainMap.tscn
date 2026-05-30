@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://dqfotk5lmi44o"]
+
+[ext_resource type="PackedScene" uid="uid://bebix55rt6j3x" path="res://CityZombie.tscn" id="1_knh7k"]
+[ext_resource type="Script" uid="uid://bfseruep5vrmk" path="res://main_camera.gd" id="2_ifu8d"]
+[ext_resource type="PackedScene" uid="uid://dqcumc1o172em" path="res://characters_lis.tscn" id="3_cccdv"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cccdv"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_x4u1r"]
+sky_material = SubResource("ProceduralSkyMaterial_cccdv")
+
+[sub_resource type="Environment" id="Environment_h7suj"]
+background_mode = 2
+sky = SubResource("Sky_x4u1r")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Node3D" type="Node3D" unique_id=1652462177]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1524191367]
+environment = SubResource("Environment_h7suj")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=28460020]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Map" parent="." unique_id=923852137 instance=ExtResource("1_knh7k")]
+
+[node name="MainCamera" type="Camera3D" parent="." unique_id=1056685689 node_paths=PackedStringArray("player")]
+transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 15, 8)
+script = ExtResource("2_ifu8d")
+player = NodePath("../Player_Lis")
+
+[node name="Player_Lis" parent="." unique_id=885777494 instance=ExtResource("3_cccdv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.9852724, 0)
