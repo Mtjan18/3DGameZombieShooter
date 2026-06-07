@@ -38,6 +38,7 @@ player = NodePath("../Player_Lis")
 
 [node name="Player_Lis" parent="." unique_id=885777494 instance=ExtResource("3_cccdv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.783149, 0)
+floor_stop_on_slope = false
 
 [node name="Lantai" type="StaticBody3D" parent="." unique_id=1423407963]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.560075, 0)

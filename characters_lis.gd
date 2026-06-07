@@ -4,6 +4,11 @@ const SPEED = 5.0
 
 @onready var anim_tree = $AnimationTree 
 @onready var playback = anim_tree.get("parameters/playback")
+var bullet = load("res://PistolBullets.tscn")
+@onready var spawn = $CharacterArmature/Skeleton3D/Middle1_L/Pistol/SpawnPistolBullets
+var current_fire_rate: float = 0.5
+var shoot_timer: float = 0.0
+
 
 func _physics_process(delta):
 	# 1. Pergerakan Karakter (WASD)
@@ -24,26 +29,32 @@ func _physics_process(delta):
 	move_and_slide()
 
 	look_at_mouse()
+	
+	if shoot_timer > 0.0:
+		shoot_timer -= delta
+	if Input.is_action_pressed("click") and shoot_timer <= 0:
+		var instance = bullet.instantiate()
+		instance.position = spawn.global_position
+		instance.transform.basis=spawn.global_transform.basis
+		get_parent().add_child(instance)
+		shoot_timer = current_fire_rate
 
 func look_at_mouse():
-	# Mengambil posisi kursor dan menembakkan garis imajiner (Raycast) dari Kamera ke lantai 3D
 	var camera = get_viewport().get_camera_3d()
 	var mouse_pos = get_viewport().get_mouse_position()
-	var ray_length = 1000.0
 
-	var from = camera.project_ray_origin(mouse_pos)
-	var to = from + camera.project_ray_normal(mouse_pos) * ray_length
+	# 1. Buat bidang datar (Plane) yang menghadap ke atas (Vector3.UP)
+	# dan letakkan persis di ketinggian (Y) karakter saat ini.
+	var drop_plane = Plane(Vector3.UP, global_position.y)
 
-	var space_state = get_world_3d().direct_space_state
-	var query = PhysicsRayQueryParameters3D.create(from, to)
-	
-	query.collision_mask = 2
-	
-	# Opsional: Pastikan raycast hanya menabrak lantai (bisa diset collision mask-nya)
-	var result = space_state.intersect_ray(query)
+	# 2. Dapatkan titik awal dan arah sinar dari kamera berdasarkan posisi mouse
+	var ray_origin = camera.project_ray_origin(mouse_pos)
+	var ray_dir = camera.project_ray_normal(mouse_pos)
 
-	if result:
-		var look_pos = result.position
-		# Kunci sumbu Y agar karakter tidak menunduk ke lantai atau mendongak ke langit
-		look_pos.y = global_position.y 
-		look_at(look_pos, Vector3.UP)
+	# 3. Cari titik potong (intersection) antara sinar kamera dan bidang maya tadi
+	var intersection = drop_plane.intersects_ray(ray_origin, ray_dir)
+
+	# 4. Jika menemukan titik potongnya, suruh karakter melihat ke sana
+	if intersection != null:
+		look_at(intersection, Vector3.UP)
+		
