@@ -3,6 +3,11 @@
 [ext_resource type="PackedScene" uid="uid://bebix55rt6j3x" path="res://CityZombie.tscn" id="1_knh7k"]
 [ext_resource type="Script" uid="uid://bfseruep5vrmk" path="res://main_camera.gd" id="2_ifu8d"]
 [ext_resource type="PackedScene" uid="uid://dqcumc1o172em" path="res://characters_lis.tscn" id="3_cccdv"]
+[ext_resource type="Script" uid="uid://dj881wfefdv4w" path="res://ui_manager.gd" id="4_5ctcv"]
+[ext_resource type="Script" uid="uid://dtdhhkg81mvrq" path="res://zombie_spawner.gd" id="5_7nwjn"]
+[ext_resource type="PackedScene" uid="uid://dc3x3qofs7x5k" path="res://zombie_basic.tscn" id="5_abjp3"]
+[ext_resource type="PackedScene" uid="uid://bbtgqrq462pcv" path="res://zombie_chubby.tscn" id="6_7nwjn"]
+[ext_resource type="PackedScene" uid="uid://dvduk3yrj2s77" path="res://zombie_arm_2.tscn" id="7_sjimn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cccdv"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -18,6 +23,11 @@ tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_cccdv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7hoac"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vxxhf"]
+bg_color = Color(0.89599264, 0.02125182, 1.92523e-07, 1)
 
 [node name="Node3D" type="Node3D" unique_id=1652462177]
 
@@ -48,3 +58,119 @@ collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Lantai" unique_id=1860120626]
 shape = SubResource("WorldBoundaryShape3D_cccdv")
+
+[node name="UIManager" type="CanvasLayer" parent="." unique_id=1844780454]
+script = ExtResource("4_5ctcv")
+
+[node name="Panel" type="Panel" parent="UIManager" unique_id=943581589]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -93.0
+offset_top = -92.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="WeaponNameLabel" type="Label" parent="UIManager/Panel" unique_id=1075358928]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="AmmoLabel" type="Label" parent="UIManager/Panel" unique_id=1346286889]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_right = 40.0
+offset_bottom = 11.5
+grow_vertical = 2
+
+[node name="HealthBar" type="ProgressBar" parent="UIManager" unique_id=1085488607]
+offset_left = 16.0
+offset_top = 14.0
+offset_right = 267.0
+offset_bottom = 41.0
+theme_override_styles/background = SubResource("StyleBoxFlat_7hoac")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vxxhf")
+value = 100.0
+show_percentage = false
+
+[node name="ScoreLabel" type="Label" parent="UIManager" unique_id=1217923774]
+offset_left = 1047.0
+offset_top = 19.0
+offset_right = 1090.0
+offset_bottom = 42.0
+text = "Score : "
+
+[node name="FadeScreen" type="ColorRect" parent="UIManager" unique_id=1176608172]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 0)
+
+[node name="GameOverPanel" type="Panel" parent="UIManager" unique_id=1731478896]
+offset_left = 405.0
+offset_top = 199.0
+offset_right = 745.0
+offset_bottom = 448.0
+
+[node name="Label" type="Label" parent="UIManager/GameOverPanel" unique_id=1415862595]
+layout_mode = 0
+offset_left = 124.0
+offset_top = 31.0
+offset_right = 216.0
+offset_bottom = 54.0
+text = "GAME OVER"
+
+[node name="FinalScore" type="Label" parent="UIManager/GameOverPanel" unique_id=322822776]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 73.0
+offset_right = 177.0
+offset_bottom = 96.0
+text = "Final Score : "
+
+[node name="HighScore" type="Label" parent="UIManager/GameOverPanel" unique_id=1269818710]
+layout_mode = 0
+offset_left = 81.0
+offset_top = 105.0
+offset_right = 121.0
+offset_bottom = 128.0
+text = "Hight Score : "
+
+[node name="RetryButton" type="Button" parent="UIManager/GameOverPanel" unique_id=1767306369]
+layout_mode = 0
+offset_left = 138.0
+offset_top = 186.0
+offset_right = 188.0
+offset_bottom = 217.0
+text = "Retry"
+
+[node name="WaveProgressBar" type="ProgressBar" parent="UIManager" unique_id=938223368]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -255.0
+offset_right = 255.0
+offset_bottom = 27.0
+grow_horizontal = 2
+show_percentage = false
+
+[node name="CountdownLabel" type="Label" parent="UIManager" unique_id=650605260]
+visible = false
+offset_left = 507.0
+offset_top = 79.0
+offset_right = 627.0
+offset_bottom = 102.0
+text = "Next Wave in: 3"
+
+[node name="ZombieSpawner" type="Node3D" parent="." unique_id=267669246 node_paths=PackedStringArray("player")]
+script = ExtResource("5_7nwjn")
+player = NodePath("../Player_Lis")
+basic_zombie_scene = ExtResource("5_abjp3")
+chubby_zombie_scene = ExtResource("6_7nwjn")
+arm2_zombie_scene = ExtResource("7_sjimn")
+
+[node name="SpawnTimer" type="Timer" parent="ZombieSpawner" unique_id=1972975828]
