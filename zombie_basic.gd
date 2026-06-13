@@ -16,7 +16,7 @@ var attack_anim: String = "Punch"
 
 @export var ammo_scene: PackedScene
 @export var exp_orb_scene: PackedScene
-
+@export var blood_scene: PackedScene
 
 var ammo_drop_chance: float = 0.3 
 
@@ -192,7 +192,21 @@ func die():
 	var spawner = get_tree().current_scene.find_child("ZombieSpawner", true, false)
 	if spawner and spawner.has_method("on_zombie_killed"):
 		spawner.on_zombie_killed()
+		
+	var blood = blood_scene.instantiate()
+	blood.global_position = Vector3(global_position.x, global_position.y + 0.05, global_position.z) 
+	get_tree().current_scene.call_deferred("add_child", blood)
 	
 	# Tunggu animasi selesai baru hancurkan zombie
 	await anim_player.animation_finished 
 	queue_free()
+
+func setup_stats(wave: int):
+	# Base HP Basic adalah 3. Naik 1 HP setiap 3 Wave.
+	health = 3 + int(wave / 3.0) 
+	
+	# Jika ini Wave Relaksasi (Kelipatan 7 - 1 = 6, 13, 20)
+	if wave % 7 == 6:
+		ammo_drop_chance = 0.8 # 80% Drop Ammo!
+	else:
+		ammo_drop_chance = 0.3

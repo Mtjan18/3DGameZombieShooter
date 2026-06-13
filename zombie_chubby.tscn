@@ -2,6 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://c4anraj38h4ij" path="res://3DAssets/Zombie Apocalypse Kit - March 2024/Characters/glTF/Zombie_Chubby_Zombie_Atlas.png" id="1_ba5bn"]
 [ext_resource type="Script" uid="uid://bsm2rk0qbn0nb" path="res://zombie_chubby.gd" id="1_embso"]
+[ext_resource type="PackedScene" uid="uid://b87jtd124tmk6" path="res://ammo_pickup.tscn" id="2_m1oht"]
+[ext_resource type="PackedScene" uid="uid://caqe3c58fdm28" path="res://ExpOrb.tscn" id="3_jh0yc"]
+[ext_resource type="PackedScene" uid="uid://x107vfh40ixe" path="res://BloodSplatter.tscn" id="4_jh0yc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g7wgm"]
 radius = 0.64501953
@@ -6482,6 +6485,9 @@ collision_layer = 8
 floor_max_angle = 1.0471976
 safe_margin = 0.01
 script = ExtResource("1_embso")
+ammo_scene = ExtResource("2_m1oht")
+exp_orb_scene = ExtResource("3_jh0yc")
+blood_scene = ExtResource("4_jh0yc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1806936584]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7391142, 0)

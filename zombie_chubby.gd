@@ -26,6 +26,11 @@ var attack_cooldown = 1.5
 var is_dead = false 
 var is_hit = false 
 
+@export var ammo_scene: PackedScene
+@export var exp_orb_scene: PackedScene
+@export var blood_scene: PackedScene
+var ammo_drop_chance: float = 0.4 
+
 func _ready():
 	player = get_tree().current_scene.find_child("Player_Lis", true, false)
 	# Panggil fungsi pengocok tipe saat zombie baru saja dilahirkan oleh Spawner
@@ -146,16 +151,32 @@ func take_damage(damage_amount):
 
 # --- FUNGSI MATI ---
 func die():
+	if is_dead: return 
 	is_dead = true 
-	$CollisionShape3D.disabled = true 
+	$CollisionShape3D.set_deferred("disabled", true) 
+	
+	if indicator_arrow: indicator_arrow.visible = false
 	anim_player.play("Death")
 	
-	if indicator_arrow:
-		indicator_arrow.visible = false
+	if randf() <= ammo_drop_chance: 
+		var ammo_instance = ammo_scene.instantiate()
+		ammo_instance.position = self.position + Vector3(0, 0.5, 0)
+		get_parent().call_deferred("add_child", ammo_instance)
 	
+	var orb = exp_orb_scene.instantiate()
+	orb.exp_value = 3 # Chubby Kasih 3 EXP (Hijau)
+	orb.position = self.position + Vector3(0, 0.5, 0)
+	get_parent().call_deferred("add_child", orb)
+	
+	var ui = get_tree().root.find_child("UIManager", true, false)
+	if ui and ui.has_method("add_score"): ui.add_score(1)
+		
 	var spawner = get_tree().current_scene.find_child("ZombieSpawner", true, false)
-	if spawner and spawner.has_method("on_zombie_killed"):
-		spawner.on_zombie_killed()
+	if spawner and spawner.has_method("on_zombie_killed"): spawner.on_zombie_killed()
+	
+	var blood = blood_scene.instantiate()
+	blood.global_position = Vector3(global_position.x, global_position.y + 0.05, global_position.z) 
+	get_tree().current_scene.call_deferred("add_child", blood)
 	
 	await anim_player.animation_finished 
 	queue_free()

@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://061mkenjj6cw" path="res://zombie_basic.gd" id="1_s5avs"]
 [ext_resource type="PackedScene" uid="uid://b87jtd124tmk6" path="res://ammo_pickup.tscn" id="2_hljfk"]
 [ext_resource type="PackedScene" uid="uid://caqe3c58fdm28" path="res://ExpOrb.tscn" id="3_yffg3"]
+[ext_resource type="PackedScene" uid="uid://x107vfh40ixe" path="res://BloodSplatter.tscn" id="4_ovj04"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kgesr"]
 radius = 0.61279297
@@ -6578,6 +6579,7 @@ safe_margin = 0.01
 script = ExtResource("1_s5avs")
 ammo_scene = ExtResource("2_hljfk")
 exp_orb_scene = ExtResource("3_yffg3")
+blood_scene = ExtResource("4_ovj04")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=413214733]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6019724, 0)

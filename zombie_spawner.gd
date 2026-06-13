@@ -14,24 +14,18 @@ var basic_queue: int = 0
 var chubby_queue: int = 0
 var arm2_queue: int = 0
 
-# --- VARIABEL BARU UNTUK PROGRESS WAVE ---
 var total_zombies_in_wave: int = 0
 var zombies_killed: int = 0
 var is_resting: bool = false
 var rest_time_left: float = 0.0
 
 func _ready():
-	spawn_timer.wait_time = 1.5
 	spawn_timer.timeout.connect(_on_spawn_timer_timeout)
-	
-	# Delay 3 detik pertama sebelum Wave 1 dimulai
 	start_rest_time()
 
 func _process(delta):
-	# Logika menghitung mundur jeda antar wave
 	if is_resting:
 		rest_time_left -= delta
-		
 		var ui = get_tree().current_scene.find_child("UIManager", true, false)
 		if ui and ui.has_method("update_countdown"):
 			ui.update_countdown(rest_time_left)
@@ -43,23 +37,58 @@ func _process(delta):
 
 func start_rest_time():
 	is_resting = true
-	rest_time_left = 3.0 # Waktu jeda 3 detik
+	rest_time_left = 3.0
 
+# --- LOGIKA ROLLERCOASTER WAVE ---
 func start_wave(wave: int):
 	print("--- MEMULAI WAVE ", wave, " ---")
 	zombies_killed = 0
 	
-	total_zombies_in_wave = 20 + (wave * 5)
-	arm2_queue = min(wave / 3, 5) 
+	# 1. TENTUKAN JUMLAH ZOMBIE BERDASARKAN TIPE WAVE
+	if wave % 7 == 6: # WAVE 6, 13, 20 (Relaksasi, Drop Rate Tinggi)
+		total_zombies_in_wave = 10 + (wave * 2) 
+	elif wave % 7 == 0: # WAVE 7, 14, 21 (BOSS WAVE)
+		total_zombies_in_wave = 12 + (wave * 2) 
+	else: # WAVE NORMAL
+		total_zombies_in_wave = 15 + (wave * 5) + int(pow(wave, 1.2))
+
+	# 2. TENTUKAN KECEPATAN SPAWN
+	var new_wait_time = max(0.3, 1.5 - (wave * 0.05))
+	if wave % 7 == 6: new_wait_time = 1.0 # Keluar lambat pas relaksasi
+	spawn_timer.wait_time = new_wait_time
 	
-	if wave >= 2:
-		chubby_queue = 2 + (wave * 2)
+	# 3. KOMPOSISI ZOMBIE
+	if wave % 7 == 0:
+		# BOSS BATTLE: Boss muncul sesuai kelipatan (Wave 7 = 1, Wave 14 = 2, dll)
+		arm2_queue = max(1, int(wave / 7)) 
+		chubby_queue = int(total_zombies_in_wave * 0.3)
+		basic_queue = total_zombies_in_wave - arm2_queue - chubby_queue
+	elif wave % 4 == 0:
+		# TEMBOK DAGING (Banyak Chubby)
+		chubby_queue = int(total_zombies_in_wave * 0.5)
+		arm2_queue = 0
+		basic_queue = total_zombies_in_wave - chubby_queue
 	else:
-		chubby_queue = 0
-		
-	basic_queue = total_zombies_in_wave - arm2_queue - chubby_queue
+		# WAVE NORMAL TERGANTUNG LEVEL
+		if wave <= 3:
+			basic_queue = total_zombies_in_wave
+			chubby_queue = 0
+			arm2_queue = 0
+		elif wave <= 5:
+			chubby_queue = int(total_zombies_in_wave * 0.2)
+			arm2_queue = 0
+			basic_queue = total_zombies_in_wave - chubby_queue
+		else:
+			# Normal mix untuk wave tinggi (Sesekali ada elite Arm2)
+			var chubby_percent = min(0.30, 0.10 + (wave * 0.01))
+			var arm2_percent = min(0.10, 0.01 + (wave * 0.005))
+			
+			chubby_queue = int(total_zombies_in_wave * chubby_percent)
+			arm2_queue = int(total_zombies_in_wave * arm2_percent)
+			basic_queue = total_zombies_in_wave - arm2_queue - chubby_queue
+
+	if basic_queue < 0: basic_queue = 0
 	
-	# Setup UI Progress Bar
 	var ui = get_tree().current_scene.find_child("UIManager", true, false)
 	if ui and ui.has_method("setup_wave_ui"):
 		ui.setup_wave_ui(total_zombies_in_wave)
@@ -68,7 +97,7 @@ func start_wave(wave: int):
 
 func _on_spawn_timer_timeout():
 	var zombie_to_spawn: PackedScene = null
-	var type_selected = "" # Menyimpan info tipe apa yang sedang dicoba
+	var type_selected = ""
 	
 	if basic_queue > 0:
 		zombie_to_spawn = basic_zombie_scene
@@ -86,16 +115,11 @@ func _on_spawn_timer_timeout():
 		spawn_timer.stop() 
 		return
 		
-	# Simpan hasil lemparan nilai dari fungsi spawn_zombie
-	var success = spawn_zombie(zombie_to_spawn)
-	
-	# JIKA GAGAL SPAWN: Kembalikan kuota ke dalam antrean
-	if not success:
+	if not spawn_zombie(zombie_to_spawn):
 		if type_selected == "basic": basic_queue += 1
 		elif type_selected == "chubby": chubby_queue += 1
 		elif type_selected == "arm2": arm2_queue += 1
 
-# --- PERHATIKAN: Tambahkan -> bool di akhir nama fungsi ---
 func spawn_zombie(zombie_scene: PackedScene) -> bool:
 	if player == null or zombie_scene == null: return false
 	
@@ -105,37 +129,38 @@ func spawn_zombie(zombie_scene: PackedScene) -> bool:
 	
 	for i in range(10):
 		var random_dir = Vector3(randf_range(-1, 1), 0, randf_range(-1, 1)).normalized()
-		var random_dist = randf_range(10.0, 20.0)
+		var random_dist = randf_range(12.0, 25.0) # Sedikit dijauhkan agar tidak spawn di muka player
 		var target_pos = player.global_position + (random_dir * random_dist)
 		target_pos.y = player.global_position.y 
 		
 		var test_pos = NavigationServer3D.map_get_closest_point(map, target_pos)
 		
-		if abs(test_pos.y - player.global_position.y) < 1.5:
+		if abs(test_pos.y - player.global_position.y) < 1:
 			final_spawn_pos = test_pos
 			is_valid_position = true
 			break 
 			
-	if not is_valid_position:
-		return false # Lapor ke timer bahwa spawn gagal
+	if not is_valid_position: return false 
 	
 	var instance = zombie_scene.instantiate()
 	get_parent().add_child(instance)
 	instance.global_position = final_spawn_pos
+	
+	# --- SISTEM SCALING: Beritahu zombie di wave berapa dia lahir ---
+	if instance.has_method("setup_stats"):
+		instance.setup_stats(current_wave)
+		
 	active_zombies_in_map += 1
-	return true # Lapor ke timer bahwa spawn berhasil
+	return true 
 
-# --- FUNGSI BARU: DIPANGGIL SAAT ZOMBIE MATI ---
 func on_zombie_killed():
 	active_zombies_in_map -= 1
 	zombies_killed += 1
 	
-	# Isi bar darahnya
 	var ui = get_tree().current_scene.find_child("UIManager", true, false)
 	if ui and ui.has_method("update_wave_progress"):
 		ui.update_wave_progress(zombies_killed)
 		
-	# Jika semua zombie di wave ini sudah mati
 	if zombies_killed >= total_zombies_in_wave:
-		current_wave += 1 # Naikkan level wave
-		start_rest_time() # Mulai jeda 3 detik
+		current_wave += 1 
+		start_rest_time()

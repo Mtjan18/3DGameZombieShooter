@@ -171,6 +171,22 @@ func take_damage(amount):
 	else:
 		play_hit_animation() 
 
+# --- FUNGSI HEAL (DIPANGGIL OLEH MEDKIT) ---
+func heal(amount: int):
+	if is_dead: return
+	
+	health += amount
+	if health > max_health:
+		health = max_health # Jangan sampai melebihi batas maksimal (termasuk bonus Upgrade)
+		
+	# Update UI Darah
+	var ui = get_tree().root.find_child("UIManager", true, false)
+	if ui and ui.has_method("update_health"):
+		ui.update_health(health)
+		
+	# Opsional: Bisa tambahkan efek partikel hijau atau suara di sini nanti
+	print("Healed! HP sekarang: ", health)
+
 func die():
 	is_dead = true
 	velocity = Vector3.ZERO 

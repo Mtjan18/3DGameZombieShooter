@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cugcu0lmk5lny" path="res://upgrade_ui.tscn" id="6_sjimn"]
 [ext_resource type="PackedScene" uid="uid://cj0nd1kpj2poy" path="res://pause_menu.tscn" id="7_7hoac"]
 [ext_resource type="PackedScene" uid="uid://dvduk3yrj2s77" path="res://zombie_arm_2.tscn" id="7_sjimn"]
+[ext_resource type="PackedScene" uid="uid://3ctrnmbily7h" path="res://MedkitAltar.tscn" id="12_vxxhf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cccdv"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -378,3 +379,26 @@ chubby_zombie_scene = ExtResource("6_7nwjn")
 arm2_zombie_scene = ExtResource("7_sjimn")
 
 [node name="SpawnTimer" type="Timer" parent="ZombieSpawner" unique_id=1972975828]
+
+[node name="MedkitAltar" type="Node3D" parent="." unique_id=520286184]
+
+[node name="MedkitAltar" parent="MedkitAltar" unique_id=399882297 instance=ExtResource("12_vxxhf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.592888, 3.2857008)
+
+[node name="MedkitAltar2" parent="MedkitAltar" unique_id=1586699581 instance=ExtResource("12_vxxhf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.510139, 7.592888, -13.925399)
+
+[node name="MedkitAltar3" parent="MedkitAltar" unique_id=160584912 instance=ExtResource("12_vxxhf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.903046, 7.592888, -13.925399)
+
+[node name="MedkitAltar4" parent="MedkitAltar" unique_id=1121083725 instance=ExtResource("12_vxxhf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.903046, 7.592888, 26.537067)
+
+[node name="MedkitAltar5" parent="MedkitAltar" unique_id=961378980 instance=ExtResource("12_vxxhf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.85887, 7.592888, 38.342075)
+
+[node name="MedkitAltar6" parent="MedkitAltar" unique_id=1654884279 instance=ExtResource("12_vxxhf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.295055, 7.592888, 42.479435)
+
+[node name="MedkitAltar7" parent="MedkitAltar" unique_id=65503730 instance=ExtResource("12_vxxhf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.784634, 7.592888, 4.513528)
