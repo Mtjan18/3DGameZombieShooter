@@ -87,14 +87,32 @@ func _on_spawn_timer_timeout():
 func spawn_zombie(zombie_scene: PackedScene):
 	if player == null or zombie_scene == null: return
 	
-	var random_dir = Vector3(randf_range(-1, 1), 0, randf_range(-1, 1)).normalized()
-	var random_dist = randf_range(10.0, 20.0)
-	var target_pos = player.global_position + (random_dir * random_dist)
-	target_pos.y = player.global_position.y 
-	
 	var map = get_world_3d().navigation_map
-	var final_spawn_pos = NavigationServer3D.map_get_closest_point(map, target_pos)
+	var final_spawn_pos = Vector3.ZERO
+	var is_valid_position = false
 	
+	# SISTEM KOCOK ULANG (Maksimal 10 kali percobaan agar game tidak lag/hang)
+	for i in range(10):
+		var random_dir = Vector3(randf_range(-1, 1), 0, randf_range(-1, 1)).normalized()
+		var random_dist = randf_range(10.0, 20.0)
+		var target_pos = player.global_position + (random_dir * random_dist)
+		target_pos.y = player.global_position.y 
+		
+		var test_pos = NavigationServer3D.map_get_closest_point(map, target_pos)
+		
+		# CEK KETINGGIAN: Apakah titik hasil pencarian tingginya hampir sama dengan kaki player?
+		# (Toleransi 1.5 meter untuk mengantisipasi trotoar atau jalanan yang sedikit menanjak)
+		if abs(test_pos.y - player.global_position.y) < 1.5:
+			final_spawn_pos = test_pos
+			is_valid_position = true
+			break # Titik valid ditemukan! Langsung hentikan proses kocok ulang.
+			
+	# Jika setelah 10x percobaan tetap gagal (misal player sedang terpojok di ruangan tertutup),
+	# batalkan kemunculan zombie kali ini agar tidak nyangkut di atap.
+	if not is_valid_position:
+		return
+	
+	# Jika valid, cetak zombienya!
 	var instance = zombie_scene.instantiate()
 	get_parent().add_child(instance)
 	instance.global_position = final_spawn_pos
