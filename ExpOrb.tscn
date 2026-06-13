@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://caqe3c58fdm28"]
+
+[ext_resource type="Script" uid="uid://bobmv4d30pyll" path="res://exp_orb.gd" id="1_5ld4u"]
+[ext_resource type="Shader" uid="uid://cws83ltl4jsn2" path="res://ExpOrb.gdshader" id="2_khpx1"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_0ou20"]
+radius = 0.25
+height = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2jxvb"]
+render_priority = 0
+shader = ExtResource("2_khpx1")
+shader_parameter/base_color = Color(0, 0.5, 1, 1)
+shader_parameter/pulse_speed = 3.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rn6vl"]
+radius = 0.25
+
+[node name="ExpOrb" type="Area3D" unique_id=795699361]
+collision_mask = 5
+script = ExtResource("1_5ld4u")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1387143542]
+mesh = SubResource("SphereMesh_0ou20")
+surface_material_override/0 = SubResource("ShaderMaterial_2jxvb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=729939979]
+shape = SubResource("SphereShape3D_rn6vl")

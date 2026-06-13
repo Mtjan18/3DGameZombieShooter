@@ -2,6 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://cd6tqe3iak7rb" path="res://3DAssets/Zombie Apocalypse Kit - March 2024/Characters/glTF/Zombie_Basic_Zombie_Atlas.png" id="1_kgesr"]
 [ext_resource type="Script" uid="uid://061mkenjj6cw" path="res://zombie_basic.gd" id="1_s5avs"]
+[ext_resource type="PackedScene" uid="uid://b87jtd124tmk6" path="res://ammo_pickup.tscn" id="2_hljfk"]
+[ext_resource type="PackedScene" uid="uid://caqe3c58fdm28" path="res://ExpOrb.tscn" id="3_yffg3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kgesr"]
 radius = 0.61279297
@@ -6574,6 +6576,8 @@ collision_layer = 8
 floor_max_angle = 1.0471976
 safe_margin = 0.01
 script = ExtResource("1_s5avs")
+ammo_scene = ExtResource("2_hljfk")
+exp_orb_scene = ExtResource("3_yffg3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=413214733]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6019724, 0)
@@ -6949,8 +6953,11 @@ autoplay = &"Walk"
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1468140797]
 
-[node name="IndicatorArrow" type="MeshInstance3D" parent="." unique_id=1050039452]
-transform = Transform3D(1, 0, 0, 0, -4.3711392e-08, 1.0000001, 0, -1.0000001, -4.3711392e-08, 0, 0, 0)
+[node name="IndicatorArrow" type="Node3D" parent="." unique_id=1489922177]
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0)
 top_level = true
+
+[node name="ArrowMesh" type="MeshInstance3D" parent="IndicatorArrow" unique_id=1050039452]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
 mesh = SubResource("PrismMesh_s5avs")
 surface_material_override/0 = SubResource("StandardMaterial3D_hljfk")

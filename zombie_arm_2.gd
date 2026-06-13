@@ -8,6 +8,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 # --- REFERENSI NODE ---
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer 
+@onready var indicator_arrow = $IndicatorArrow
 
 var player: CharacterBody3D = null
 
@@ -35,7 +36,29 @@ func _physics_process(delta):
 		return
 
 	var distance_to_player = global_position.distance_to(player.global_position)
-
+	
+# --- FITUR PANAH INDIKATOR (1 Meter dari Player) ---
+	if indicator_arrow:
+		# 1. Cari arah dari Player menuju Zombie ini
+		var dir_to_zombie = (global_position - player.global_position).normalized()
+		
+		# 2. Taruh panah di radius 1.2 meter dari Player (agar tidak nabrak badan)
+		indicator_arrow.global_position = player.global_position + (dir_to_zombie * 1.2)
+		
+		# 3. Kunci ketinggian panah setinggi dada player (biar ga nempel di aspal)
+		indicator_arrow.global_position.y = player.global_position.y + 1.0
+		
+		# 4. Suruh panah menatap ke arah zombie
+		# (Karena Y dilock, kita arahkan target tatapannya ke tinggi yang sama agar panah tidak mendongak)
+		var target_look = Vector3(global_position.x, indicator_arrow.global_position.y, global_position.z)
+		indicator_arrow.look_at(target_look, Vector3.UP)
+		
+		# 5. [ANTI VISUAL CLUTTER] Sembunyikan panah jika zombie sudah dekat (misal jarak 10 meter)
+		if distance_to_player < 10.0:
+			indicator_arrow.visible = false
+		else:
+			indicator_arrow.visible = true
+			
 	# --- JARAK SERANG ---
 	if distance_to_player <= attack_distance:
 		velocity = Vector3.ZERO 
@@ -102,6 +125,9 @@ func take_damage(damage_amount):
 func die():
 	is_dead = true 
 	$CollisionShape3D.disabled = true 
+	
+	if indicator_arrow:
+		indicator_arrow.visible = false
 	
 	anim_player.play("Death")
 	print("Zombie Arm2 Tumbang!")

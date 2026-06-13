@@ -6470,6 +6470,13 @@ _data = {
 &"Yes": SubResource("Animation_ph3k0")
 }
 
+[sub_resource type="PrismMesh" id="PrismMesh_embso"]
+size = Vector3(0.225, 0.1, 0.065)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g7wgm"]
+no_depth_test = true
+shading_mode = 0
+
 [node name="Zombie_Chubby" type="CharacterBody3D" unique_id=167914649]
 collision_layer = 8
 floor_max_angle = 1.0471976
@@ -6853,3 +6860,12 @@ skeleton = NodePath("..")
 libraries/ = SubResource("AnimationLibrary_8lh70")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1395849993]
+
+[node name="IndicatorArrow" type="Node3D" parent="." unique_id=462366702]
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0)
+top_level = true
+
+[node name="ArrowMesh" type="MeshInstance3D" parent="IndicatorArrow" unique_id=774120136]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("PrismMesh_embso")
+surface_material_override/0 = SubResource("StandardMaterial3D_g7wgm")

@@ -68,30 +68,41 @@ func start_wave(wave: int):
 
 func _on_spawn_timer_timeout():
 	var zombie_to_spawn: PackedScene = null
+	var type_selected = "" # Menyimpan info tipe apa yang sedang dicoba
 	
 	if basic_queue > 0:
 		zombie_to_spawn = basic_zombie_scene
+		type_selected = "basic"
 		basic_queue -= 1
 	elif chubby_queue > 0:
 		zombie_to_spawn = chubby_zombie_scene
+		type_selected = "chubby"
 		chubby_queue -= 1
 	elif arm2_queue > 0:
 		zombie_to_spawn = arm2_zombie_scene
+		type_selected = "arm2"
 		arm2_queue -= 1
 	else:
 		spawn_timer.stop() 
 		return
 		
-	spawn_zombie(zombie_to_spawn)
+	# Simpan hasil lemparan nilai dari fungsi spawn_zombie
+	var success = spawn_zombie(zombie_to_spawn)
+	
+	# JIKA GAGAL SPAWN: Kembalikan kuota ke dalam antrean
+	if not success:
+		if type_selected == "basic": basic_queue += 1
+		elif type_selected == "chubby": chubby_queue += 1
+		elif type_selected == "arm2": arm2_queue += 1
 
-func spawn_zombie(zombie_scene: PackedScene):
-	if player == null or zombie_scene == null: return
+# --- PERHATIKAN: Tambahkan -> bool di akhir nama fungsi ---
+func spawn_zombie(zombie_scene: PackedScene) -> bool:
+	if player == null or zombie_scene == null: return false
 	
 	var map = get_world_3d().navigation_map
 	var final_spawn_pos = Vector3.ZERO
 	var is_valid_position = false
 	
-	# SISTEM KOCOK ULANG (Maksimal 10 kali percobaan agar game tidak lag/hang)
 	for i in range(10):
 		var random_dir = Vector3(randf_range(-1, 1), 0, randf_range(-1, 1)).normalized()
 		var random_dist = randf_range(10.0, 20.0)
@@ -100,23 +111,19 @@ func spawn_zombie(zombie_scene: PackedScene):
 		
 		var test_pos = NavigationServer3D.map_get_closest_point(map, target_pos)
 		
-		# CEK KETINGGIAN: Apakah titik hasil pencarian tingginya hampir sama dengan kaki player?
-		# (Toleransi 1.5 meter untuk mengantisipasi trotoar atau jalanan yang sedikit menanjak)
 		if abs(test_pos.y - player.global_position.y) < 1.5:
 			final_spawn_pos = test_pos
 			is_valid_position = true
-			break # Titik valid ditemukan! Langsung hentikan proses kocok ulang.
+			break 
 			
-	# Jika setelah 10x percobaan tetap gagal (misal player sedang terpojok di ruangan tertutup),
-	# batalkan kemunculan zombie kali ini agar tidak nyangkut di atap.
 	if not is_valid_position:
-		return
+		return false # Lapor ke timer bahwa spawn gagal
 	
-	# Jika valid, cetak zombienya!
 	var instance = zombie_scene.instantiate()
 	get_parent().add_child(instance)
 	instance.global_position = final_spawn_pos
 	active_zombies_in_map += 1
+	return true # Lapor ke timer bahwa spawn berhasil
 
 # --- FUNGSI BARU: DIPANGGIL SAAT ZOMBIE MATI ---
 func on_zombie_killed():

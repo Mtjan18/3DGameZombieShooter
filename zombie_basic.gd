@@ -14,6 +14,12 @@ var attack_anim: String = "Punch"
 @onready var anim_player = $AnimationPlayer 
 @onready var indicator_arrow = $IndicatorArrow
 
+@export var ammo_scene: PackedScene
+@export var exp_orb_scene: PackedScene
+
+
+var ammo_drop_chance: float = 0.3 
+
 var player: CharacterBody3D = null
 
 # --- PENGATURAN SERANGAN ---
@@ -35,15 +41,15 @@ func randomize_zombie_type():
 	var random_type = randi() % 3 + 1 # Mengocok angka 1, 2, atau 3
 	
 	if random_type == 1:
-		current_speed = 2.0
+		current_speed = 1.0
 		move_anim = "Walk"
 		attack_anim = "Punch"
 	elif random_type == 2:
-		current_speed = 4.0
+		current_speed = 2.0
 		move_anim = "Run"
 		attack_anim = "Run_Attack"
 	else:
-		current_speed = 5.0
+		current_speed = 3.0
 		move_anim = "Run_Arms"
 		attack_anim = "Run_Attack"
 
@@ -124,7 +130,8 @@ func attack_player():
 		player.take_damage(10) 
 		
 	await get_tree().create_timer(attack_cooldown).timeout
-	can_attack = true
+	if is_instance_valid(self) and not is_dead:
+		can_attack = true
 
 # --- FUNGSI MENERIMA DAMAGE ---
 func take_damage(damage_amount):
@@ -145,17 +152,47 @@ func take_damage(damage_amount):
 
 # --- FUNGSI MATI ---
 func die():
+	# Mencegah peluru lain mengeksekusi fungsi ini dua kali di frame yang sama
+	if is_dead: return 
+	
 	is_dead = true 
-	$CollisionShape3D.disabled = true 
+	
+	# MATIKAN COLLISION DENGAN AMAN
+	$CollisionShape3D.set_deferred("disabled", true) 
 	
 	if indicator_arrow:
 		indicator_arrow.visible = false
 		
 	anim_player.play("Death")
 	
+	# --- LOGIKA LOOT DROP ---
+	if randf() <= ammo_drop_chance: 
+		var ammo_instance = ammo_scene.instantiate()
+		
+		# PERUBAHAN DI SINI: Gunakan 'position' (lokal), bukan 'global_position'
+		ammo_instance.position = self.position + Vector3(0, 0.5, 0)
+		
+		# GUNAKAN CALL_DEFERRED UNTUK ADD_CHILD
+		get_parent().call_deferred("add_child", ammo_instance)
+	
+	# --- TEPAT SEBELUM queue_free() ---
+	var orb = exp_orb_scene.instantiate()
+	
+	# UBAH ANGKA INI SESUAI TIPE ZOMBIE: Basic(1), Chubby(3), Arm2(10)
+	orb.exp_value = 1 
+	
+	orb.position = self.position + Vector3(0, 0.5, 0)
+	get_parent().call_deferred("add_child", orb)
+	
+	# Lapor skor dan progress wave
+	var ui = get_tree().root.find_child("UIManager", true, false)
+	if ui and ui.has_method("add_score"):
+		ui.add_score(1)
+		
 	var spawner = get_tree().current_scene.find_child("ZombieSpawner", true, false)
 	if spawner and spawner.has_method("on_zombie_killed"):
 		spawner.on_zombie_killed()
 	
+	# Tunggu animasi selesai baru hancurkan zombie
 	await anim_player.animation_finished 
 	queue_free()

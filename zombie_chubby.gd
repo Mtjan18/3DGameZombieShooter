@@ -13,6 +13,7 @@ var attack_anim: String = "Punch"
 # --- REFERENSI NODE ---
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer 
+@onready var indicator_arrow = $IndicatorArrow
 
 var player: CharacterBody3D = null
 
@@ -43,7 +44,7 @@ func randomize_zombie_type():
 		move_anim = "Run"
 		attack_anim = "Run_Attack"
 	else:
-		current_speed = 3.0
+		current_speed = 2.5
 		move_anim = "Run_Arms"
 		attack_anim = "Run_Attack"
 
@@ -60,6 +61,28 @@ func _physics_process(delta):
 
 	var distance_to_player = global_position.distance_to(player.global_position)
 
+# --- FITUR PANAH INDIKATOR (1 Meter dari Player) ---
+	if indicator_arrow:
+		# 1. Cari arah dari Player menuju Zombie ini
+		var dir_to_zombie = (global_position - player.global_position).normalized()
+		
+		# 2. Taruh panah di radius 1.2 meter dari Player (agar tidak nabrak badan)
+		indicator_arrow.global_position = player.global_position + (dir_to_zombie * 1.2)
+		
+		# 3. Kunci ketinggian panah setinggi dada player (biar ga nempel di aspal)
+		indicator_arrow.global_position.y = player.global_position.y + 1.0
+		
+		# 4. Suruh panah menatap ke arah zombie
+		# (Karena Y dilock, kita arahkan target tatapannya ke tinggi yang sama agar panah tidak mendongak)
+		var target_look = Vector3(global_position.x, indicator_arrow.global_position.y, global_position.z)
+		indicator_arrow.look_at(target_look, Vector3.UP)
+		
+		# 5. [ANTI VISUAL CLUTTER] Sembunyikan panah jika zombie sudah dekat (misal jarak 10 meter)
+		if distance_to_player < 10.0:
+			indicator_arrow.visible = false
+		else:
+			indicator_arrow.visible = true
+			
 	# --- JARAK SERANG ---
 	if distance_to_player <= attack_distance:
 		velocity = Vector3.ZERO 
@@ -126,6 +149,9 @@ func die():
 	is_dead = true 
 	$CollisionShape3D.disabled = true 
 	anim_player.play("Death")
+	
+	if indicator_arrow:
+		indicator_arrow.visible = false
 	
 	var spawner = get_tree().current_scene.find_child("ZombieSpawner", true, false)
 	if spawner and spawner.has_method("on_zombie_killed"):
