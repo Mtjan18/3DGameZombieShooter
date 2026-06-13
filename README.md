@@ -22,5 +22,4 @@ Players must navigate the battlefield using keyboard controls (WASD) while aimin
 *   **Move:** `W` `A` `S` `D`
 *   **Aim:** Move Mouse Cursor
 *   **Shoot:** `Left Click`
-*   **Reload:** `R`
 *   **Switch Weapon:** `Q` / `E` or `Scroll Wheel`
