@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://t75sjwwqxyat"
+path="res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Puddle - 1).wav-7d2d4dc57776cc3d1ce30d9ae6f7a90c.sample"
+
+[deps]
+
+source_file="res://3DAssets/JDSherbert - Footstep Foley SFX Pack (FREE)/Stereo/wav (SD)/JDSherbert - Footstep Foley SFX Pack - Footstep (Puddle - 1).wav"
+dest_files=["res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Puddle - 1).wav-7d2d4dc57776cc3d1ce30d9ae6f7a90c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://0a0yyf3124w3"
+path="res://.godot/imported/JDSherbert - Firearm FX - Pistol SFX Pack - Desert Eagle - Aim - 1.mp3-bfbf2944ce11a9825962bc41c59b2e99.mp3str"
+
+[deps]
+
+source_file="res://3DAssets/JDSherbert - FirearmFX - Desert Eagle SFX Pack (FREE)/Mono/mp3/JDSherbert - Firearm FX - Pistol SFX Pack - Desert Eagle - Aim - 1.mp3"
+dest_files=["res://.godot/imported/JDSherbert - Firearm FX - Pistol SFX Pack - Desert Eagle - Aim - 1.mp3-bfbf2944ce11a9825962bc41c59b2e99.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

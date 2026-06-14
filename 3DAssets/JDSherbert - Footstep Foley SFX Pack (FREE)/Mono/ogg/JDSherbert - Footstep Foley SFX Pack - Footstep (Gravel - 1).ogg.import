@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dm55vvjbqd8k8"
+path="res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Gravel - 1).ogg-483d903db4c303893347f239d83248d3.oggvorbisstr"
+
+[deps]
+
+source_file="res://3DAssets/JDSherbert - Footstep Foley SFX Pack (FREE)/Mono/ogg/JDSherbert - Footstep Foley SFX Pack - Footstep (Gravel - 1).ogg"
+dest_files=["res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Gravel - 1).ogg-483d903db4c303893347f239d83248d3.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

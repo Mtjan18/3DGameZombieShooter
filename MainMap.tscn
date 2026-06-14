@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dqcumc1o172em" path="res://characters_lis.tscn" id="3_cccdv"]
 [ext_resource type="Script" uid="uid://dj881wfefdv4w" path="res://ui_manager.gd" id="4_5ctcv"]
 [ext_resource type="Script" uid="uid://dtdhhkg81mvrq" path="res://zombie_spawner.gd" id="5_7nwjn"]
+[ext_resource type="AudioStream" uid="uid://c0opntoxhnpvj" path="res://3DAssets/GameOver.wav" id="5_7p6h3"]
 [ext_resource type="PackedScene" uid="uid://dc3x3qofs7x5k" path="res://zombie_basic.tscn" id="5_abjp3"]
 [ext_resource type="Texture2D" uid="uid://con35ylim2qea" path="res://3DAssets/kenney_crosshairPack/PNG/White/crosshair117.png" id="5_sjimn"]
 [ext_resource type="PackedScene" uid="uid://bbtgqrq462pcv" path="res://zombie_chubby.tscn" id="6_7nwjn"]
@@ -312,6 +313,9 @@ theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
 text = "RETRY"
+
+[node name="GameOverAudio" type="AudioStreamPlayer2D" parent="UIManager/GameOverPanel" unique_id=1388758761]
+stream = ExtResource("5_7p6h3")
 
 [node name="WaveProgressBar" type="ProgressBar" parent="UIManager" unique_id=938223368]
 anchors_preset = 5

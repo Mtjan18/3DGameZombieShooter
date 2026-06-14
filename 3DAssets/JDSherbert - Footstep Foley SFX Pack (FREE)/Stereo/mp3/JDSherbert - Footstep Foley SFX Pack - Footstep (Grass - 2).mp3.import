@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bg5jdy4bfmeo1"
+path="res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Grass - 2).mp3-464dd6af82d418e7bf0e1b7340dc8a47.mp3str"
+
+[deps]
+
+source_file="res://3DAssets/JDSherbert - Footstep Foley SFX Pack (FREE)/Stereo/mp3/JDSherbert - Footstep Foley SFX Pack - Footstep (Grass - 2).mp3"
+dest_files=["res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Grass - 2).mp3-464dd6af82d418e7bf0e1b7340dc8a47.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

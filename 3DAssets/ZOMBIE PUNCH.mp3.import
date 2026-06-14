@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dphxsaq38o8ux"
+path="res://.godot/imported/ZOMBIE PUNCH.mp3-48078279864462bbe1cb2a54dfe4bb3a.mp3str"
+
+[deps]
+
+source_file="res://3DAssets/ZOMBIE PUNCH.mp3"
+dest_files=["res://.godot/imported/ZOMBIE PUNCH.mp3-48078279864462bbe1cb2a54dfe4bb3a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

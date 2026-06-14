@@ -6,7 +6,10 @@ var float_height: float = 0.3
 var time_passed: float = 0.0
 var start_y: float = 0.0
 
-# Sinyal khusus untuk memberitahu Altar bahwa Medkit ini sudah diambil
+var is_picked_up: bool = false # Mencegah item diambil 2 kali di frame yang sama
+
+@onready var pickup_audio = $PickupAudio
+
 signal medkit_taken
 
 func _ready():
@@ -14,15 +17,28 @@ func _ready():
 	body_entered.connect(_on_body_entered)
 
 func _process(delta):
-	# Animasi berputar dan mengambang
+	# Jika sudah diambil, hentikan animasi melayang
+	if is_picked_up: return 
+	
 	rotate_y(deg_to_rad(90) * delta)
 	time_passed += delta
 	position.y = start_y + (sin(time_passed * float_speed) * float_height)
 
 func _on_body_entered(body):
+	if is_picked_up: return
+	
 	if body.name == "Player_Lis":
-		# Cek apakah player punya fungsi heal DAN darahnya belum penuh
 		if body.has_method("heal") and body.health < body.max_health:
+			is_picked_up = true
 			body.heal(heal_amount)
-			medkit_taken.emit() # Lapor ke Altar!
-			queue_free() # Hancurkan medkit
+			medkit_taken.emit() 
+			
+			# --- TRIK AUDIO PICKUP ---
+			pickup_audio.pitch_scale = randf_range(0.9, 1.1)
+			pickup_audio.play()
+			
+			hide() # Sembunyikan gambar medkit
+			$CollisionShape3D.set_deferred("disabled", true) # Matikan sensor sentuh
+			
+			await pickup_audio.finished # Tunggu suara selesai
+			queue_free()

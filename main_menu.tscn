@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dt0lnlob0fo5n"]
 
 [ext_resource type="Script" uid="uid://cgme6ritvvffq" path="res://main_menu.gd" id="1_06t4h"]
+[ext_resource type="AudioStream" uid="uid://dcfa18h0qdv5o" path="res://3DAssets/Main Menu - Dark.mp3" id="2_7vrkn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BtnNormal"]
 bg_color = Color(0.18, 0.22, 0.28, 1)
@@ -116,3 +117,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnPressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
 text = "QUIT"
+
+[node name="BGMAudio" type="AudioStreamPlayer2D" parent="." unique_id=1892819729]
+stream = ExtResource("2_7vrkn")

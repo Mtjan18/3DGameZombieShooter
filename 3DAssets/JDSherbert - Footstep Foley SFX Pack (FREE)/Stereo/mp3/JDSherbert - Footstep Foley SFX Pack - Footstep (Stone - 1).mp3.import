@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cx5um4htwlr3p"
+path="res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Stone - 1).mp3-d6729fe3d8dbe64c7a86bb6254d5916e.mp3str"
+
+[deps]
+
+source_file="res://3DAssets/JDSherbert - Footstep Foley SFX Pack (FREE)/Stereo/mp3/JDSherbert - Footstep Foley SFX Pack - Footstep (Stone - 1).mp3"
+dest_files=["res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Stone - 1).mp3-d6729fe3d8dbe64c7a86bb6254d5916e.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -9,6 +9,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer 
 @onready var indicator_arrow = $IndicatorArrow
+@onready var death_audio = $DeathAudio # <--- Tambahkan variabel ini
 
 var player: CharacterBody3D = null
 
@@ -42,23 +43,15 @@ func _physics_process(delta):
 
 	var distance_to_player = global_position.distance_to(player.global_position)
 	
-# --- FITUR PANAH INDIKATOR (1 Meter dari Player) ---
+	# --- FITUR PANAH INDIKATOR (1 Meter dari Player) ---
 	if indicator_arrow:
-		# 1. Cari arah dari Player menuju Zombie ini
 		var dir_to_zombie = (global_position - player.global_position).normalized()
-		
-		# 2. Taruh panah di radius 1.2 meter dari Player (agar tidak nabrak badan)
 		indicator_arrow.global_position = player.global_position + (dir_to_zombie * 1.2)
-		
-		# 3. Kunci ketinggian panah setinggi dada player (biar ga nempel di aspal)
 		indicator_arrow.global_position.y = player.global_position.y + 1.0
 		
-		# 4. Suruh panah menatap ke arah zombie
-		# (Karena Y dilock, kita arahkan target tatapannya ke tinggi yang sama agar panah tidak mendongak)
 		var target_look = Vector3(global_position.x, indicator_arrow.global_position.y, global_position.z)
 		indicator_arrow.look_at(target_look, Vector3.UP)
 		
-		# 5. [ANTI VISUAL CLUTTER] Sembunyikan panah jika zombie sudah dekat (misal jarak 10 meter)
 		if distance_to_player < 10.0:
 			indicator_arrow.visible = false
 		else:
@@ -91,7 +84,6 @@ func _physics_process(delta):
 				look_at(look_dir, Vector3.UP, true)
 				
 				if can_attack: 
-					# Jika model zombie ini punya animasi lari, kamu bisa ganti "Walk" jadi "Run"
 					anim_player.play("Walk") 
 
 	move_and_slide()
@@ -101,7 +93,6 @@ func attack_player():
 	can_attack = false
 	anim_player.play("Punch") 
 	
-	# Kirim damage 30 ke Player
 	if player.has_method("take_damage"):
 		player.take_damage(30) 
 		
@@ -135,18 +126,22 @@ func die():
 	if indicator_arrow: indicator_arrow.visible = false
 	anim_player.play("Death")
 	
+	# --- MAINKAN AUDIO MATI ---
+	death_audio.pitch_scale = randf_range(0.85, 1.15)
+	death_audio.play()
+	
 	if randf() <= ammo_drop_chance: 
 		var ammo_instance = ammo_scene.instantiate()
 		ammo_instance.position = self.position + Vector3(0, 0.5, 0)
 		get_parent().call_deferred("add_child", ammo_instance)
 	
 	var orb = exp_orb_scene.instantiate()
-	orb.exp_value = 10 # Boss kasih Orb Emas (10 EXP)!
+	orb.exp_value = 10 
 	orb.position = self.position + Vector3(0, 0.5, 0)
 	get_parent().call_deferred("add_child", orb)
 	
 	var ui = get_tree().root.find_child("UIManager", true, false)
-	if ui and ui.has_method("add_score"): ui.add_score(5) # Bos kasih 5 Poin Kill
+	if ui and ui.has_method("add_score"): ui.add_score(5) 
 		
 	var spawner = get_tree().current_scene.find_child("ZombieSpawner", true, false)
 	if spawner and spawner.has_method("on_zombie_killed"): spawner.on_zombie_killed()
@@ -158,8 +153,5 @@ func die():
 	await anim_player.animation_finished 
 	queue_free()
 
-
 func setup_stats(wave: int):
-	# Di Wave 7, HP Boss adalah 30 + 35 = 65 HP. 
-	# Ini sangat pas untuk dihadapi Pistol Level awal.
 	health = 30 + (wave * 5)

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dp1kuqx70102p" path="res://ammo_pickup.gd" id="1_hkks5"]
 [ext_resource type="Texture2D" uid="uid://bxcbsdx1pu3o" path="res://3DAssets/Bullets Pickup_Atlas.png" id="2_nxu3p"]
 [ext_resource type="Shader" uid="uid://ctxx7lh65lmyo" path="res://ammo_pickup.gdshader" id="3_nxu3p"]
+[ext_resource type="AudioStream" uid="uid://grra5e80upyx" path="res://3DAssets/JDSherbert - Ultimate UI SFX Pack (FREE)/Stereo/wav (SD)/JDSherbert - Ultimate UI SFX Pack - Popup Open - 1.wav" id="4_mc3hl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_myci8"]
 resource_name = "Atlas"
@@ -70,3 +71,6 @@ surface_material_override/0 = SubResource("ShaderMaterial_mc3hl")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=165870855]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0052490234)
 shape = SubResource("BoxShape3D_mc3hl")
+
+[node name="PickupAudio" type="AudioStreamPlayer3D" parent="." unique_id=411440786]
+stream = ExtResource("4_mc3hl")

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b1d4vi0i03kgb"
+path="res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Water - 2).ogg-aa0b8b1e68e38d314ef5e47d98f7770c.oggvorbisstr"
+
+[deps]
+
+source_file="res://3DAssets/JDSherbert - Footstep Foley SFX Pack (FREE)/Stereo/ogg/JDSherbert - Footstep Foley SFX Pack - Footstep (Water - 2).ogg"
+dest_files=["res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Water - 2).ogg-aa0b8b1e68e38d314ef5e47d98f7770c.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ds48ciwspncv1"
+path="res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Grass - 1).ogg-81dad5e9e96a253138ae9b0b53d288dd.oggvorbisstr"
+
+[deps]
+
+source_file="res://3DAssets/JDSherbert - Footstep Foley SFX Pack (FREE)/Mono/ogg/JDSherbert - Footstep Foley SFX Pack - Footstep (Grass - 1).ogg"
+dest_files=["res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Grass - 1).ogg-81dad5e9e96a253138ae9b0b53d288dd.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

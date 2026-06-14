@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bbn5oegyeeled"
+path="res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Broken Glass - 2).ogg-6eb4b24c7c8e071b0a869ea1de58dcce.oggvorbisstr"
+
+[deps]
+
+source_file="res://3DAssets/JDSherbert - Footstep Foley SFX Pack (FREE)/Mono/ogg/JDSherbert - Footstep Foley SFX Pack - Footstep (Broken Glass - 2).ogg"
+dest_files=["res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Broken Glass - 2).ogg-6eb4b24c7c8e071b0a869ea1de58dcce.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cm23xy2lg6y4o"
+path="res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Snow - 1).mp3-8070a1678fc6294420aedb30ccb16490.mp3str"
+
+[deps]
+
+source_file="res://3DAssets/JDSherbert - Footstep Foley SFX Pack (FREE)/Mono/mp3/JDSherbert - Footstep Foley SFX Pack - Footstep (Snow - 1).mp3"
+dest_files=["res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Snow - 1).mp3-8070a1678fc6294420aedb30ccb16490.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

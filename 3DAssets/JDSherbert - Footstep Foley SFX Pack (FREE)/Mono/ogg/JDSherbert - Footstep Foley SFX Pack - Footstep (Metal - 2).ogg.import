@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://byidafyxth0c7"
+path="res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Metal - 2).ogg-9f8d6e5037c71638215723a5905d1f3c.oggvorbisstr"
+
+[deps]
+
+source_file="res://3DAssets/JDSherbert - Footstep Foley SFX Pack (FREE)/Mono/ogg/JDSherbert - Footstep Foley SFX Pack - Footstep (Metal - 2).ogg"
+dest_files=["res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Metal - 2).ogg-9f8d6e5037c71638215723a5905d1f3c.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -13,6 +13,9 @@ var upgrade_db = [
 var active_upgrades = {} 
 var current_choices = [] 
 
+# --- VARIABEL AUDIO UI ---
+@onready var select_audio = $SelectAudio # <--- Tambahkan baris ini
+
 @onready var cards = [
 	$CenterContainer/VBoxContainer/MarginContainer/HBoxContainer/Card1,
 	$CenterContainer/VBoxContainer/MarginContainer/HBoxContainer/Card2,
@@ -59,6 +62,10 @@ func trigger_level_up():
 
 # --- FUNGSI SAAT KARTU DIKLIK ---
 func _on_card_selected(index: int):
+	# --- MAINKAN AUDIO KLIK ---
+	select_audio.pitch_scale = randf_range(0.95, 1.05) # Opsional: acak nada sedikit
+	select_audio.play()
+	
 	var selected = current_choices[index]
 	var id = selected.id
 	
@@ -79,7 +86,7 @@ func apply_to_player(id: String):
 	
 	match id:
 		"swift_feet":
-			player.SPEED += (player.SPEED * 0.10) # Tambah 10% [cite: 47]
+			player.SPEED += (player.SPEED * 0.10) # Tambah 10% 
 			
 		"super_magnet":
 			# Kita akan modifikasi radius vacuum di script exp_orb nanti, 
@@ -90,16 +97,16 @@ func apply_to_player(id: String):
 		"deep_pockets":
 			for wep in player.weapons_data:
 				if wep.has("max_reserve") and wep["max_reserve"] > 0:
-					wep["max_reserve"] += int(wep["max_reserve"] * 0.30) # Tambah 30% [cite: 55]
+					wep["max_reserve"] += int(wep["max_reserve"] * 0.30) # Tambah 30% 
 					
 		"tough_skin":
-			player.max_health += 25 # Tambah batas HP [cite: 60]
-			player.health += 25     # Tambah darah saat ini [cite: 59]
+			player.max_health += 25 # Tambah batas HP 
+			player.health += 25     # Tambah darah saat ini 
 			player.take_damage(0)   # Trik memanggil fungsi update UI darah tanpa melukai player
 			
 		"trigger_happy":
 			for wep in player.weapons_data:
 				if wep["type"] == "ranged":
-					wep["fire_rate"] *= 0.90 # Kurangi jeda 10% (makin kecil makin cepat) [cite: 71]
+					wep["fire_rate"] *= 0.90 # Kurangi jeda 10% (makin kecil makin cepat)
 			# Perbarui kecepatan tembak senjata yang sedang dipegang
 			player.current_fire_rate = player.weapons_data[player.current_weapon_index]["fire_rate"]

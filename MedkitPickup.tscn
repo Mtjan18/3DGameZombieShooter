@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://c0yyinv2iv4b7"]
 
 [ext_resource type="Script" uid="uid://cr1mmo65ldi82" path="res://medkit_pickup.gd" id="1_d86k3"]
+[ext_resource type="AudioStream" uid="uid://grra5e80upyx" path="res://3DAssets/JDSherbert - Ultimate UI SFX Pack (FREE)/Stereo/wav (SD)/JDSherbert - Ultimate UI SFX Pack - Popup Open - 1.wav" id="2_lqus5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bchih"]
 resource_name = "Red"
@@ -115,3 +116,6 @@ mesh = SubResource("ArrayMesh_ndvov")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=685014303]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.016197205, 0.15875244, -0.046875)
 shape = SubResource("BoxShape3D_lqus5")
+
+[node name="PickupAudio" type="AudioStreamPlayer3D" parent="." unique_id=549615315]
+stream = ExtResource("2_lqus5")

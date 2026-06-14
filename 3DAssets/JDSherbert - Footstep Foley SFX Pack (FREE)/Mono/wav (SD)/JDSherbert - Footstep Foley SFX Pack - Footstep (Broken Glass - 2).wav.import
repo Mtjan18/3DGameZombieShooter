@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cn7i64x8lpojk"
+path="res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Broken Glass - 2).wav-9f613e0719873c0e886c6fd16a5b1caf.sample"
+
+[deps]
+
+source_file="res://3DAssets/JDSherbert - Footstep Foley SFX Pack (FREE)/Mono/wav (SD)/JDSherbert - Footstep Foley SFX Pack - Footstep (Broken Glass - 2).wav"
+dest_files=["res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Broken Glass - 2).wav-9f613e0719873c0e886c6fd16a5b1caf.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

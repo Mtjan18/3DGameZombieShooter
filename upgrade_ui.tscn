@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cugcu0lmk5lny"]
 
 [ext_resource type="Script" uid="uid://bb82kcyg6474b" path="res://upgrade_ui.gd" id="1_j3xiq"]
+[ext_resource type="AudioStream" uid="uid://dvyctaygjj1n4" path="res://3DAssets/JDSherbert - Ultimate UI SFX Pack (FREE)/Stereo/wav (SD)/JDSherbert - Ultimate UI SFX Pack - Select - 2.wav" id="2_hherc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_normal"]
 bg_color = Color(0.133333, 0.156863, 0.192157, 0.95)
@@ -126,3 +127,8 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_hover")
 text = "Card 3"
+
+[node name="SelectAudio" type="AudioStreamPlayer3D" parent="." unique_id=1687282212]
+process_mode = 3
+stream = ExtResource("2_hherc")
+volume_db = 2.0

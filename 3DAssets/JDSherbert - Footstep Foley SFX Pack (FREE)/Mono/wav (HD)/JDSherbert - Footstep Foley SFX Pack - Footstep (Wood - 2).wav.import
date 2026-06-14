@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bsytpk1uqaha1"
+path="res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Wood - 2).wav-c412a48d614e61ec207e3f9fdc5fb868.sample"
+
+[deps]
+
+source_file="res://3DAssets/JDSherbert - Footstep Foley SFX Pack (FREE)/Mono/wav (HD)/JDSherbert - Footstep Foley SFX Pack - Footstep (Wood - 2).wav"
+dest_files=["res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Wood - 2).wav-c412a48d614e61ec207e3f9fdc5fb868.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

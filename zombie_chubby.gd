@@ -1,7 +1,6 @@
 extends CharacterBody3D
 
 # --- STATISTIK ZOMBIE DINAMIS ---
-# SPEED tidak lagi const, agar bisa diubah kecepatannya saat randomize
 var current_speed: float = 3.0 
 var health = 3 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -14,6 +13,7 @@ var attack_anim: String = "Punch"
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer 
 @onready var indicator_arrow = $IndicatorArrow
+@onready var death_audio = $DeathAudio # <--- Tambahkan variabel ini
 
 var player: CharacterBody3D = null
 
@@ -33,12 +33,10 @@ var ammo_drop_chance: float = 0.4
 
 func _ready():
 	player = get_tree().current_scene.find_child("Player_Lis", true, false)
-	# Panggil fungsi pengocok tipe saat zombie baru saja dilahirkan oleh Spawner
 	randomize_zombie_type()
 
-# --- FUNGSI ACAK TIPE (VARIASI ZOMBIE) ---
 func randomize_zombie_type():
-	var random_type = randi() % 3 + 1 # Mengocok angka 1, 2, atau 3
+	var random_type = randi() % 3 + 1 
 	
 	if random_type == 1:
 		current_speed = 1.0
@@ -66,29 +64,18 @@ func _physics_process(delta):
 
 	var distance_to_player = global_position.distance_to(player.global_position)
 
-# --- FITUR PANAH INDIKATOR (1 Meter dari Player) ---
 	if indicator_arrow:
-		# 1. Cari arah dari Player menuju Zombie ini
 		var dir_to_zombie = (global_position - player.global_position).normalized()
-		
-		# 2. Taruh panah di radius 1.2 meter dari Player (agar tidak nabrak badan)
 		indicator_arrow.global_position = player.global_position + (dir_to_zombie * 1.2)
-		
-		# 3. Kunci ketinggian panah setinggi dada player (biar ga nempel di aspal)
 		indicator_arrow.global_position.y = player.global_position.y + 1.0
-		
-		# 4. Suruh panah menatap ke arah zombie
-		# (Karena Y dilock, kita arahkan target tatapannya ke tinggi yang sama agar panah tidak mendongak)
 		var target_look = Vector3(global_position.x, indicator_arrow.global_position.y, global_position.z)
 		indicator_arrow.look_at(target_look, Vector3.UP)
 		
-		# 5. [ANTI VISUAL CLUTTER] Sembunyikan panah jika zombie sudah dekat (misal jarak 10 meter)
 		if distance_to_player < 10.0:
 			indicator_arrow.visible = false
 		else:
 			indicator_arrow.visible = true
 			
-	# --- JARAK SERANG ---
 	if distance_to_player <= attack_distance:
 		velocity = Vector3.ZERO 
 		var look_at_pos = Vector3(player.global_position.x, global_position.y, player.global_position.z)
@@ -98,7 +85,6 @@ func _physics_process(delta):
 		if can_attack:
 			attack_player()
 			
-	# --- JARAK KEJAR ---
 	else:
 		nav_agent.target_position = player.global_position
 		
@@ -106,7 +92,6 @@ func _physics_process(delta):
 			var next_path_pos = nav_agent.get_next_path_position()
 			var direction = (next_path_pos - global_position).normalized()
 			
-			# Gunakan current_speed yang sudah diacak, bukan SPEED yang const
 			velocity.x = direction.x * current_speed
 			velocity.z = direction.z * current_speed
 			
@@ -115,15 +100,12 @@ func _physics_process(delta):
 				look_at(look_dir, Vector3.UP, true)
 				
 				if can_attack: 
-					# Gunakan animasi gerakan yang sudah diacak
 					anim_player.play(move_anim)
 
 	move_and_slide()
 
-# --- FUNGSI MENYERANG ---
 func attack_player():
 	can_attack = false
-	# Gunakan animasi serangan yang sudah diacak
 	anim_player.play(attack_anim) 
 	
 	if player.has_method("take_damage"):
@@ -132,7 +114,6 @@ func attack_player():
 	await get_tree().create_timer(attack_cooldown).timeout
 	can_attack = true
 
-# --- FUNGSI MENERIMA DAMAGE ---
 func take_damage(damage_amount):
 	if is_dead:
 		return 
@@ -142,14 +123,12 @@ func take_damage(damage_amount):
 	if health <= 0:
 		die()
 	else:
-		# Logika Reaksi HitReact akan menghentikan gerakan lari
 		is_hit = true
 		velocity = Vector3.ZERO 
 		anim_player.play("HitReact") 
 		await anim_player.animation_finished 
 		is_hit = false 
 
-# --- FUNGSI MATI ---
 func die():
 	if is_dead: return 
 	is_dead = true 
@@ -158,13 +137,17 @@ func die():
 	if indicator_arrow: indicator_arrow.visible = false
 	anim_player.play("Death")
 	
+	# --- MAINKAN AUDIO MATI ---
+	death_audio.pitch_scale = randf_range(0.85, 1.15)
+	death_audio.play()
+	
 	if randf() <= ammo_drop_chance: 
 		var ammo_instance = ammo_scene.instantiate()
 		ammo_instance.position = self.position + Vector3(0, 0.5, 0)
 		get_parent().call_deferred("add_child", ammo_instance)
 	
 	var orb = exp_orb_scene.instantiate()
-	orb.exp_value = 3 # Chubby Kasih 3 EXP (Hijau)
+	orb.exp_value = 3 
 	orb.position = self.position + Vector3(0, 0.5, 0)
 	get_parent().call_deferred("add_child", orb)
 	

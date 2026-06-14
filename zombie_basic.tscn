@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b87jtd124tmk6" path="res://ammo_pickup.tscn" id="2_hljfk"]
 [ext_resource type="PackedScene" uid="uid://caqe3c58fdm28" path="res://ExpOrb.tscn" id="3_yffg3"]
 [ext_resource type="PackedScene" uid="uid://x107vfh40ixe" path="res://BloodSplatter.tscn" id="4_ovj04"]
+[ext_resource type="AudioStream" uid="uid://dphxsaq38o8ux" path="res://3DAssets/ZOMBIE PUNCH.mp3" id="6_wrhj6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kgesr"]
 radius = 0.61279297
@@ -6963,3 +6964,7 @@ top_level = true
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
 mesh = SubResource("PrismMesh_s5avs")
 surface_material_override/0 = SubResource("StandardMaterial3D_hljfk")
+
+[node name="DeathAudio" type="AudioStreamPlayer3D" parent="." unique_id=152966785]
+stream = ExtResource("6_wrhj6")
+volume_db = 5.0

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bctsgdxyo8hu3"
+path="res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Flesh - 1).ogg-1f5f71293b73d8ca78f2a9fec6e95da8.oggvorbisstr"
+
+[deps]
+
+source_file="res://3DAssets/JDSherbert - Footstep Foley SFX Pack (FREE)/Mono/ogg/JDSherbert - Footstep Foley SFX Pack - Footstep (Flesh - 1).ogg"
+dest_files=["res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Flesh - 1).ogg-1f5f71293b73d8ca78f2a9fec6e95da8.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

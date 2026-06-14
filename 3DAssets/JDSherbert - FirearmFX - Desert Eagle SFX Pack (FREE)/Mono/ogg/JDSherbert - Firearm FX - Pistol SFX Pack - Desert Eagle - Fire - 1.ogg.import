@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dt123e06j3bpq"
+path="res://.godot/imported/JDSherbert - Firearm FX - Pistol SFX Pack - Desert Eagle - Fire - 1.ogg-0fa6b0fb1e90da8c476edb92fab49dc0.oggvorbisstr"
+
+[deps]
+
+source_file="res://3DAssets/JDSherbert - FirearmFX - Desert Eagle SFX Pack (FREE)/Mono/ogg/JDSherbert - Firearm FX - Pistol SFX Pack - Desert Eagle - Fire - 1.ogg"
+dest_files=["res://.godot/imported/JDSherbert - Firearm FX - Pistol SFX Pack - Desert Eagle - Fire - 1.ogg-0fa6b0fb1e90da8c476edb92fab49dc0.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bjbho2chxptgx"
+path="res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Broken Glass - 1).mp3-a385544af7a633b90a1a974e8d0e38df.mp3str"
+
+[deps]
+
+source_file="res://3DAssets/JDSherbert - Footstep Foley SFX Pack (FREE)/Stereo/mp3/JDSherbert - Footstep Foley SFX Pack - Footstep (Broken Glass - 1).mp3"
+dest_files=["res://.godot/imported/JDSherbert - Footstep Foley SFX Pack - Footstep (Broken Glass - 1).mp3-a385544af7a633b90a1a974e8d0e38df.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
