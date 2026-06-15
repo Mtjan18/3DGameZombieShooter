@@ -6,7 +6,8 @@ var float_height: float = 0.3
 var time_passed: float = 0.0
 var start_y: float = 0.0
 
-var is_picked_up: bool = false # Mencegah item diambil 2 kali di frame yang sama
+# Mencegah item diambil 2 kali
+var is_picked_up: bool = false
 
 @onready var pickup_audio = $PickupAudio
 
@@ -17,7 +18,7 @@ func _ready():
 	body_entered.connect(_on_body_entered)
 
 func _process(delta):
-	# Jika sudah diambil, hentikan animasi melayang
+	# Jika sudah diambil, hentikan animasi 
 	if is_picked_up: return 
 	
 	rotate_y(deg_to_rad(90) * delta)
@@ -33,12 +34,12 @@ func _on_body_entered(body):
 			body.heal(heal_amount)
 			medkit_taken.emit() 
 			
-			# --- TRIK AUDIO PICKUP ---
+			# Audio pickup
 			pickup_audio.pitch_scale = randf_range(0.9, 1.1)
 			pickup_audio.play()
 			
 			hide() # Sembunyikan gambar medkit
-			$CollisionShape3D.set_deferred("disabled", true) # Matikan sensor sentuh
+			$CollisionShape3D.set_deferred("disabled", true) 
 			
 			await pickup_audio.finished # Tunggu suara selesai
 			queue_free()

@@ -6,7 +6,11 @@ extends CanvasLayer
 @onready var game_over_panel = $GameOverPanel
 @onready var final_score_label = $GameOverPanel/FinalScore
 @onready var high_score_label = $GameOverPanel/HighScore
+
+# --- TOMBOL GAME OVER ---
 @onready var retry_button = $GameOverPanel/RetryButton
+@onready var menu_button = $GameOverPanel/MenuButton
+
 @onready var weapon_name_label = $Panel/WeaponNameLabel
 @onready var ammo_label = $Panel/AmmoLabel
 @onready var cursor_ammo_ui = $CursorAmmoUI
@@ -14,7 +18,7 @@ extends CanvasLayer
 @onready var level_label = $LevelLabel
 
 # --- VARIABEL AUDIO GAME OVER ---
-@onready var game_over_audio = $GameOverPanel/GameOverAudio # <--- Tambahkan baris ini
+@onready var game_over_audio = $GameOverPanel/GameOverAudio
 
 var score = 0
 var high_score = 0
@@ -24,7 +28,10 @@ func _ready():
 	fade_screen.color.a = 0 
 	game_over_panel.hide()
 	load_high_score()
-	retry_button.pressed.connect(_on_retry_pressed)
+	
+	# Hubungkan sinyal klik tombol
+	if retry_button: retry_button.pressed.connect(_on_retry_pressed)
+	if menu_button: menu_button.pressed.connect(_on_menu_pressed)
 
 func add_score(points):
 	score += points
@@ -39,7 +46,7 @@ func show_game_over():
 	high_score_label.text = "Skor Tertinggi: " + str(high_score)
 	
 	# --- MAINKAN AUDIO GAME OVER ---
-	game_over_audio.play()
+	if game_over_audio: game_over_audio.play()
 	
 	var tween = create_tween()
 	tween.tween_property(fade_screen, "color:a", 1.0, 2.0) 
@@ -57,10 +64,21 @@ func update_wave_progress(zombies_killed: int):
 
 func show_panel():
 	game_over_panel.show()
+	
+	# Sembunyikan crosshair saat mati agar klik tidak terhalang
+	if cursor_ammo_ui: cursor_ammo_ui.hide()
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE) 
 
 func _on_retry_pressed():
-	get_tree().reload_current_scene() 
+	# MENGGUNAKAN LOADING SCREEN UNTUK RETRY
+	var current_map_path = get_tree().current_scene.scene_file_path
+	LoadingScreen.load_scene(current_map_path)
+
+func _on_menu_pressed():
+	# MENGGUNAKAN LOADING SCREEN UNTUK KEMBALI KE MAIN MENU
+	# (Pastikan ejaan "MainMenu.tscn" sesuai dengan nama filemu)
+	LoadingScreen.load_scene("res://main_menu.tscn")
 
 func load_high_score():
 	if FileAccess.file_exists(save_path):
@@ -84,15 +102,17 @@ func update_weapon_hud(weapon_name: String, current_ammo: int, reserve_ammo: int
 @onready var countdown_label = $CountdownLabel
 
 func setup_wave_ui(total_zombies: int):
-	wave_progress_bar.max_value = total_zombies
-	wave_progress_bar.value = 0
+	if wave_progress_bar:
+		wave_progress_bar.max_value = float(total_zombies)
+		wave_progress_bar.value = 0.0
 	
 func update_countdown(time_left: float):
-	countdown_label.show()
-	countdown_label.text = "Wave Selanjutnya: " + str(ceil(time_left))
+	if countdown_label:
+		countdown_label.show()
+		countdown_label.text = "Wave Selanjutnya: " + str(ceil(time_left))
 
 func hide_countdown():
-	countdown_label.hide()
+	if countdown_label: countdown_label.hide()
 	
 # CursorReload
 func _input(event):
@@ -116,11 +136,13 @@ func animate_reload_cursor(reload_time: float, target_ammo: int):
 	tween.tween_property(cursor_ammo_ui, "value", target_ammo, reload_time)
 
 func update_exp_bar(current: int, target: int):
+	if exp_bar == null: return
 	exp_bar.max_value = target
 	var tween = create_tween()
 	tween.tween_property(exp_bar, "value", float(current), 0.2).set_trans(Tween.TRANS_SINE)
 
 func update_level_text(new_level: int):
+	if level_label == null: return
 	level_label.text = "Level " + str(new_level)
 	
 	level_label.scale = Vector2(1.5, 1.5)

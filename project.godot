@@ -15,6 +15,10 @@ run/main_scene="uid://dt0lnlob0fo5n"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+LoadingScreen="*uid://bii5kwpuweplm"
+
 [display]
 
 mouse_cursor/custom_image="uid://cahwrjpfjsmcd"

@@ -10,13 +10,13 @@ extends CanvasLayer
 @onready var btn_menu = $CenterContainer/MainPanel/Margin/VBox/ButtonsHBox/MenuBtn
 
 func _ready():
-	hide() # Sembunyikan saat game baru mulai
+	hide()
 	
 	btn_resume.pressed.connect(_on_resume_pressed)
 	btn_retry.pressed.connect(_on_retry_pressed)
 	btn_menu.pressed.connect(_on_menu_pressed)
 
-# Mengecek tombol ESC (secara default di Godot terdaftar sebagai "ui_cancel")
+# Mengecek tombol ESC
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
 		toggle_pause_menu()
@@ -93,11 +93,16 @@ func _on_resume_pressed():
 	toggle_pause_menu()
 
 func _on_retry_pressed():
+	# Hapus pause sebelum memuat ulang agar Loading Screen tidak ikut membeku
 	get_tree().paused = false
-	get_tree().reload_current_scene()
+	
+	# Memuat ulang map menggunakan sistem Loading Screen
+	var current_map_path = get_tree().current_scene.scene_file_path
+	LoadingScreen.load_scene(current_map_path)
 
 func _on_menu_pressed():
+	# Hapus pause sebelum pindah scene
 	get_tree().paused = false
-	# Nanti ganti path ini dengan scene Menu Utamamu saat sudah dibuat
-	# get_tree().change_scene_to_file("res://MainMenu.tscn")
-	print("Kembali ke Main Menu (Scene belum dibuat)")
+	
+	# Pindah ke Main Menu menggunakan sistem Loading Screen agar transisi mulus
+	LoadingScreen.load_scene("res://main_menu.tscn")
