@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://dphxsaq38o8ux" path="res://3DAssets/ZOMBIE PUNCH.mp3" id="6_5n6kx"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qkhm5"]
-radius = 0.6645508
+radius = 0.4951172
 height = 1.6962891
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uawe0"]
@@ -4961,6 +4961,7 @@ no_depth_test = true
 shading_mode = 0
 
 [node name="Zombie_Arm2" type="CharacterBody3D" unique_id=1646570266 groups=["Enemy"]]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 collision_layer = 8
 floor_max_angle = 1.0471976
 safe_margin = 0.01

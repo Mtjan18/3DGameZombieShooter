@@ -38,7 +38,7 @@ func _on_body_entered(body):
 			pickup_audio.pitch_scale = randf_range(0.9, 1.1)
 			pickup_audio.play()
 			
-			hide() # Sembunyikan gambar medkit
+			hide()
 			$CollisionShape3D.set_deferred("disabled", true) 
 			
 			await pickup_audio.finished # Tunggu suara selesai

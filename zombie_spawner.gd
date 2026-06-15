@@ -39,7 +39,7 @@ func start_rest_time():
 	is_resting = true
 	rest_time_left = 3.0
 
-# --- LOGIKA ROLLERCOASTER WAVE ---
+# LOGIKA WAVE
 func start_wave(wave: int):
 	print("--- MEMULAI WAVE ", wave, " ---")
 	zombies_killed = 0
@@ -64,7 +64,7 @@ func start_wave(wave: int):
 		chubby_queue = int(total_zombies_in_wave * 0.3)
 		basic_queue = total_zombies_in_wave - arm2_queue - chubby_queue
 	elif wave % 4 == 0:
-		# TEMBOK DAGING (Banyak Chubby)
+		# Banyak Chubby
 		chubby_queue = int(total_zombies_in_wave * 0.5)
 		arm2_queue = 0
 		basic_queue = total_zombies_in_wave - chubby_queue
@@ -129,7 +129,7 @@ func spawn_zombie(zombie_scene: PackedScene) -> bool:
 	
 	for i in range(10):
 		var random_dir = Vector3(randf_range(-1, 1), 0, randf_range(-1, 1)).normalized()
-		var random_dist = randf_range(12.0, 25.0) # Sedikit dijauhkan agar tidak spawn di muka player
+		var random_dist = randf_range(12.0, 25.0)
 		var target_pos = player.global_position + (random_dir * random_dist)
 		target_pos.y = player.global_position.y 
 		
@@ -146,7 +146,6 @@ func spawn_zombie(zombie_scene: PackedScene) -> bool:
 	get_parent().add_child(instance)
 	instance.global_position = final_spawn_pos
 	
-	# --- SISTEM SCALING: Beritahu zombie di wave berapa dia lahir ---
 	if instance.has_method("setup_stats"):
 		instance.setup_stats(current_wave)
 		

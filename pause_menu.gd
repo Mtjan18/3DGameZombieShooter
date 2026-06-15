@@ -55,15 +55,14 @@ func update_stats_display():
 	update_upgrades_list()
 
 func update_upgrades_list():
-	# Bersihkan daftar upgrade lama agar tidak menumpuk saat menu dibuka-tutup
 	for child in upgrades_list.get_children():
 		child.queue_free()
 		
 	var upgrade_ui = get_tree().current_scene.find_child("UpgradeUI", true, false)
 	
 	if upgrade_ui:
-		var active = upgrade_ui.active_upgrades # Mengambil kamus data (contoh: {"swift_feet": 2})
-		var db = upgrade_ui.upgrade_db # Mengambil database nama asli
+		var active = upgrade_ui.active_upgrades
+		var db = upgrade_ui.upgrade_db
 		
 		if active.is_empty():
 			var empty_label = Label.new()
@@ -76,19 +75,16 @@ func update_upgrades_list():
 				var lvl = active[upg_id]
 				var upg_name = ""
 				
-				# Cari nama kerennya di database berdasarkan ID
 				for item in db:
 					if item["id"] == upg_id:
 						upg_name = item["name"]
 						break
 				
-				# Buat label teks (contoh: "★ Swift Feet Lv.2")
 				var lbl = Label.new()
 				lbl.text = "★ " + upg_name + " Lv." + str(lvl)
 				lbl.add_theme_font_size_override("font_size", 20)
 				upgrades_list.add_child(lbl)
 
-# --- FUNGSI TOMBOL ---
 func _on_resume_pressed():
 	toggle_pause_menu()
 
@@ -104,5 +100,4 @@ func _on_menu_pressed():
 	# Hapus pause sebelum pindah scene
 	get_tree().paused = false
 	
-	# Pindah ke Main Menu menggunakan sistem Loading Screen agar transisi mulus
 	LoadingScreen.load_scene("res://main_menu.tscn")

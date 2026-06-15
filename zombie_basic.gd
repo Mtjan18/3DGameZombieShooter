@@ -1,19 +1,16 @@
 extends CharacterBody3D
 
-# Stat
 var current_speed: float = 3.0 
 var health = 3 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-# --- VARIABEL ANIMASI ---
 var move_anim: String = "Walk"
 var attack_anim: String = "Punch"
 
-# --- REFERENSI NODE ---
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer 
 @onready var indicator_arrow = $IndicatorArrow
-@onready var death_audio = $DeathAudio # <--- Tambahkan variabel ini
+@onready var death_audio = $DeathAudio
 
 @export var ammo_scene: PackedScene
 @export var exp_orb_scene: PackedScene
@@ -23,12 +20,10 @@ var ammo_drop_chance: float = 0.3
 
 var player: CharacterBody3D = null
 
-# --- PENGATURAN SERANGAN ---
 var attack_distance = 2.0
 var can_attack = true
 var attack_cooldown = 1.5
 
-# --- STATUS ZOMBIE ---
 var is_dead = false 
 var is_hit = false 
 
@@ -143,7 +138,6 @@ func die():
 		
 	anim_player.play("Death")
 	
-	# --- MAINKAN AUDIO MATI ---
 	death_audio.pitch_scale = randf_range(0.85, 1.15) # Acak sedikit nadanya
 	death_audio.play()
 	

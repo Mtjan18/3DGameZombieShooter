@@ -7,7 +7,6 @@ extends CanvasLayer
 @onready var final_score_label = $GameOverPanel/FinalScore
 @onready var high_score_label = $GameOverPanel/HighScore
 
-# --- TOMBOL GAME OVER ---
 @onready var retry_button = $GameOverPanel/RetryButton
 @onready var menu_button = $GameOverPanel/MenuButton
 
@@ -17,7 +16,6 @@ extends CanvasLayer
 @onready var exp_bar = $ExpBar
 @onready var level_label = $LevelLabel
 
-# --- VARIABEL AUDIO GAME OVER ---
 @onready var game_over_audio = $GameOverPanel/GameOverAudio
 
 var score = 0
@@ -45,7 +43,6 @@ func show_game_over():
 	final_score_label.text = "Skor Akhir: " + str(score)
 	high_score_label.text = "Skor Tertinggi: " + str(high_score)
 	
-	# --- MAINKAN AUDIO GAME OVER ---
 	if game_over_audio: game_over_audio.play()
 	
 	var tween = create_tween()
@@ -71,13 +68,10 @@ func show_panel():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE) 
 
 func _on_retry_pressed():
-	# MENGGUNAKAN LOADING SCREEN UNTUK RETRY
 	var current_map_path = get_tree().current_scene.scene_file_path
 	LoadingScreen.load_scene(current_map_path)
 
 func _on_menu_pressed():
-	# MENGGUNAKAN LOADING SCREEN UNTUK KEMBALI KE MAIN MENU
-	# (Pastikan ejaan "MainMenu.tscn" sesuai dengan nama filemu)
 	LoadingScreen.load_scene("res://main_menu.tscn")
 
 func load_high_score():
@@ -114,7 +108,6 @@ func update_countdown(time_left: float):
 func hide_countdown():
 	if countdown_label: countdown_label.hide()
 	
-# CursorReload
 func _input(event):
 	if event is InputEventMouseMotion:
 		if cursor_ammo_ui and cursor_ammo_ui.visible:

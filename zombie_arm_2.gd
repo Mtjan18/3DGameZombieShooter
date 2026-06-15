@@ -1,24 +1,20 @@
 extends CharacterBody3D
 
-# --- STATISTIK ZOMBIE ARM2 (Tipe Cepat/Runner) ---
-const SPEED = 3.0 # Lebih cepat dari zombie basic (2.5)
+const SPEED = 3.0
 var health = 10
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-# --- REFERENSI NODE ---
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim_player = $AnimationPlayer 
 @onready var indicator_arrow = $IndicatorArrow
-@onready var death_audio = $DeathAudio # <--- Tambahkan variabel ini
+@onready var death_audio = $DeathAudio
 
 var player: CharacterBody3D = null
 
-# --- PENGATURAN SERANGAN ---
 var attack_distance = 2.0
 var can_attack = true
-var attack_cooldown = 0.8 # Memukul jauh lebih cepat dari zombie lain!
+var attack_cooldown = 0.8
 
-# --- STATUS ZOMBIE ---
 var is_dead = false 
 var is_hit = false 
 
@@ -43,7 +39,6 @@ func _physics_process(delta):
 
 	var distance_to_player = global_position.distance_to(player.global_position)
 	
-	# --- FITUR PANAH INDIKATOR (1 Meter dari Player) ---
 	if indicator_arrow:
 		var dir_to_zombie = (global_position - player.global_position).normalized()
 		indicator_arrow.global_position = player.global_position + (dir_to_zombie * 1.2)
@@ -57,7 +52,6 @@ func _physics_process(delta):
 		else:
 			indicator_arrow.visible = true
 			
-	# --- JARAK SERANG ---
 	if distance_to_player <= attack_distance:
 		velocity = Vector3.ZERO 
 		
@@ -68,7 +62,6 @@ func _physics_process(delta):
 		if can_attack:
 			attack_player()
 			
-	# --- JARAK KEJAR ---
 	else:
 		nav_agent.target_position = player.global_position
 		
@@ -88,7 +81,6 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-# --- FUNGSI MENYERANG ---
 func attack_player():
 	can_attack = false
 	anim_player.play("Punch") 
@@ -99,7 +91,6 @@ func attack_player():
 	await get_tree().create_timer(attack_cooldown).timeout
 	can_attack = true
 
-# --- FUNGSI MENERIMA DAMAGE ---
 func take_damage(damage_amount):
 	if is_dead:
 		return 
@@ -117,7 +108,6 @@ func take_damage(damage_amount):
 		await anim_player.animation_finished 
 		is_hit = false 
 
-# --- FUNGSI MATI ---
 func die():
 	if is_dead: return 
 	is_dead = true 
@@ -126,7 +116,6 @@ func die():
 	if indicator_arrow: indicator_arrow.visible = false
 	anim_player.play("Death")
 	
-	# --- MAINKAN AUDIO MATI ---
 	death_audio.pitch_scale = randf_range(0.85, 1.15)
 	death_audio.play()
 	
